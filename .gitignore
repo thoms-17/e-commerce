@@ -3,6 +3,9 @@
 /.env.local
 /.env.local.php
 /.env.*.local
+/.env.dev
+/.env.prod
+/.env.test
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
@@ -13,3 +16,15 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> docker ###
+docker-compose.override.yml
+###< docker ###
+
+###> os / ide ###
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+###< os / ide ###
