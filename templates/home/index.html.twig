@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil — Symfony Shop{% endblock %}
+
+{% block body %}
+    <div class="text-center py-20">
+        <h1 class="text-4xl font-bold text-indigo-600 mb-4">Symfony Shop</h1>
+        <p class="text-lg text-gray-600 mb-2">L'environnement fonctionne correctement.</p>
+        <p class="text-sm text-gray-400">PHP {{ phpVersion }} &bull; PostgreSQL 16 &bull; FrankenPHP</p>
+
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto text-left">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="text-2xl mb-2">✅</div>
+                <div class="font-semibold text-gray-800">Symfony 7</div>
+                <div class="text-sm text-gray-500 mt-1">Framework PHP installé et opérationnel</div>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="text-2xl mb-2">✅</div>
+                <div class="font-semibold text-gray-800">FrankenPHP</div>
+                <div class="text-sm text-gray-500 mt-1">Serveur web + PHP en un seul conteneur Docker</div>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="text-2xl mb-2">✅</div>
+                <div class="font-semibold text-gray-800">PostgreSQL</div>
+                <div class="text-sm text-gray-500 mt-1">Base de données connectée via Doctrine</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

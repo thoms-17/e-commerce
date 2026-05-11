@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Symfony Shop{% endblock %}</title>
+        {% block stylesheets %}
+            {{ importmap('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body class="min-h-screen bg-gray-50 text-gray-900">
+
+        <nav class="bg-white shadow-sm border-b border-gray-200">
+            <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+                <a href="{{ path('app_home') }}" class="text-xl font-bold text-indigo-600">Symfony Shop</a>
+                <div class="flex gap-4 text-sm">
+                    <a href="{{ path('app_home') }}" class="text-gray-600 hover:text-indigo-600">Accueil</a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="max-w-6xl mx-auto px-4 py-8">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="mb-4 px-4 py-3 rounded {% if label == 'success' %}bg-green-100 text-green-800{% elseif label == 'danger' %}bg-red-100 text-red-800{% else %}bg-blue-100 text-blue-800{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% block body %}{% endblock %}
+        </main>
+
+        <footer class="mt-16 border-t border-gray-200 py-6 text-center text-sm text-gray-400">
+            Symfony Shop &mdash; Projet portfolio
+        </footer>
+    </body>
+</html>
