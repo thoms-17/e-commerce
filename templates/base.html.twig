@@ -19,6 +19,7 @@
                 <a href="{{ path('app_home') }}" class="text-xl font-bold text-indigo-600">Symfony Shop</a>
                 <div class="flex gap-4 text-sm items-center">
                     <a href="{{ path('app_home') }}" class="text-gray-600 hover:text-indigo-600">Accueil</a>
+                    <a href="{{ path('app_product_index') }}" class="text-gray-600 hover:text-indigo-600">Catalogue</a>
                     {% if app.user %}
                         <span class="text-gray-400">{{ app.user.userIdentifier }}</span>
                         <a href="{{ path('app_logout') }}" class="text-gray-600 hover:text-red-600">Déconnexion</a>
