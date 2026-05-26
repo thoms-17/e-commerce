@@ -1,0 +1,6 @@
+vendor/
+var/
+.git/
+.env.local
+docker-compose.override.yml
+*.md

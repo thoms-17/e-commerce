@@ -14,7 +14,7 @@ services:
     environment:
       APP_ENV: dev
       APP_SECRET: "${APP_SECRET}"
-      DATABASE_URL: "postgresql://app:app@db:5432/ecommerce?serverVersion=16&charset=utf8"
+      DATABASE_URL: "${DATABASE_URL}"
       SERVER_NAME: ":80"
     depends_on:
       db:
@@ -26,9 +26,9 @@ services:
     image: postgres:16-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ecommerce
-      POSTGRES_USER: app
-      POSTGRES_PASSWORD: app
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
