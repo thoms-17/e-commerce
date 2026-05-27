@@ -17,14 +17,18 @@ class CartExtension extends AbstractExtension implements GlobalsInterface
 
     public function getGlobals(): array
     {
-        $user = $this->security->getUser();
+        try {
+            $user = $this->security->getUser();
 
-        if (!$user instanceof User) {
+            if (!$user instanceof User) {
+                return ['cart_count' => 0];
+            }
+
+            $cart = $this->cartRepository->findByUser($user);
+
+            return ['cart_count' => $cart ? $cart->getTotalItems() : 0];
+        } catch (\Throwable) {
             return ['cart_count' => 0];
         }
-
-        $cart = $this->cartRepository->findByUser($user);
-
-        return ['cart_count' => $cart ? $cart->getTotalItems() : 0];
     }
 }

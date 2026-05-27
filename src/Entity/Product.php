@@ -5,8 +5,10 @@ namespace App\Entity;
 use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+#[UniqueEntity(fields: ['slug'], message: 'Ce slug est déjà utilisé par un autre produit.')]
 class Product
 {
     #[ORM\Id]

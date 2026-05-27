@@ -9,15 +9,16 @@
         <nav class="space-y-1">
             {% set currentRoute = app.request.attributes.get('_route') %}
             {% set navLinks = [
-                {route: 'app_admin_dashboard',       label: '📊 Dashboard'},
-                {route: 'app_admin_product_index',   label: '📦 Produits'},
-                {route: 'app_admin_category_index',  label: '🏷️ Catégories'},
-                {route: 'app_admin_order_index',     label: '🧾 Commandes'},
+                {route: 'app_admin_dashboard',       label: '📊 Dashboard',    prefix: 'app_admin_dashboard'},
+                {route: 'app_admin_product_index',   label: '📦 Produits',     prefix: 'app_admin_product_'},
+                {route: 'app_admin_category_index',  label: '🏷️ Catégories',  prefix: 'app_admin_category_'},
+                {route: 'app_admin_order_index',     label: '🧾 Commandes',    prefix: 'app_admin_order_'},
+                {route: 'app_admin_user_index',      label: '👥 Utilisateurs', prefix: 'app_admin_user_'},
             ] %}
             {% for link in navLinks %}
             <a href="{{ path(link.route) }}"
                class="flex items-center px-3 py-2 rounded-lg text-sm font-medium transition
-                      {% if currentRoute starts with link.route %}
+                      {% if currentRoute starts with link.prefix %}
                           bg-indigo-50 text-indigo-700
                       {% else %}
                           text-gray-600 hover:bg-gray-100
