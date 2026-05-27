@@ -18,8 +18,15 @@
         <div class="grid grid-cols-1 md:grid-cols-2">
 
             {# Image #}
-            <div class="h-80 md:h-auto bg-gradient-to-br from-indigo-50 to-gray-100 flex items-center justify-center">
-                <span class="text-8xl">🛍️</span>
+            {% set catStyles = {
+                'electronique':  {bg: 'from-blue-50 to-blue-100',    icon: '💻'},
+                'vetements':     {bg: 'from-pink-50 to-pink-100',    icon: '👕'},
+                'maison-jardin': {bg: 'from-green-50 to-green-100',  icon: '🏡'},
+                'sport':         {bg: 'from-orange-50 to-orange-100', icon: '🏃'},
+            } %}
+            {% set style = catStyles[product.category.slug] ?? {bg: 'from-gray-50 to-gray-100', icon: '🛍️'} %}
+            <div class="h-80 md:h-auto bg-gradient-to-br {{ style.bg }} flex items-center justify-center">
+                <span class="text-8xl">{{ style.icon }}</span>
             </div>
 
             {# Infos #}

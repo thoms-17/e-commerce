@@ -4,6 +4,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Symfony Shop{% endblock %}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
         {% block stylesheets %}
             {{ importmap('app') }}
         {% endblock %}
@@ -14,7 +17,7 @@
     </head>
     <body class="min-h-screen bg-gray-50 text-gray-900">
 
-        <nav class="bg-white shadow-sm border-b border-gray-200">
+        <nav id="main-nav" class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200 transition-shadow duration-300">
             <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
                 <a href="{{ path('app_home') }}" class="text-xl font-bold text-indigo-600">Symfony Shop</a>
                 <div class="flex gap-4 text-sm items-center">
@@ -56,5 +59,20 @@
         <footer class="mt-16 border-t border-gray-200 py-6 text-center text-sm text-gray-400">
             Symfony Shop &mdash; Projet portfolio
         </footer>
+
+        <script>
+            (function () {
+                var nav = document.getElementById('main-nav');
+                window.addEventListener('scroll', function () {
+                    if (window.scrollY > 10) {
+                        nav.classList.add('shadow-md');
+                        nav.classList.remove('shadow-sm');
+                    } else {
+                        nav.classList.add('shadow-sm');
+                        nav.classList.remove('shadow-md');
+                    }
+                }, { passive: true });
+            })();
+        </script>
     </body>
 </html>
