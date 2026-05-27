@@ -21,6 +21,9 @@
                     <a href="{{ path('app_home') }}" class="text-gray-600 hover:text-indigo-600">Accueil</a>
                     <a href="{{ path('app_product_index') }}" class="text-gray-600 hover:text-indigo-600">Catalogue</a>
                     {% if app.user %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('app_admin_dashboard') }}" class="text-orange-600 hover:text-orange-700 font-semibold">Admin</a>
+                        {% endif %}
                         <a href="{{ path('app_order_history') }}" class="text-gray-600 hover:text-indigo-600">Mes commandes</a>
                         <a href="{{ path('app_cart_index') }}" class="relative text-gray-600 hover:text-indigo-600">
                             Panier

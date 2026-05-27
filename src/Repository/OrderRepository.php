@@ -24,4 +24,14 @@ class OrderRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getTotalRevenue(): float
+    {
+        $result = $this->createQueryBuilder('o')
+            ->select('SUM(o.total) as total')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return (float) ($result ?? 0);
+    }
 }

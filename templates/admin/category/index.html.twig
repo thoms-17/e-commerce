@@ -1,0 +1,50 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Catégories — Admin{% endblock %}
+
+{% block admin_body %}
+<div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">Catégories</h1>
+    <a href="{{ path('app_admin_category_new') }}"
+       class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-xl transition text-sm">
+        + Nouvelle catégorie
+    </a>
+</div>
+
+<div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+    {% if categories is empty %}
+        <p class="px-6 py-10 text-center text-gray-400">Aucune catégorie.</p>
+    {% else %}
+        <table class="w-full text-sm">
+            <thead class="bg-gray-50 text-gray-500 border-b border-gray-100">
+                <tr>
+                    <th class="text-left px-5 py-3 font-medium">Nom</th>
+                    <th class="text-left px-5 py-3 font-medium">Slug</th>
+                    <th class="text-right px-5 py-3 font-medium">Produits</th>
+                    <th class="text-right px-5 py-3 font-medium">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                {% for category in categories %}
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-5 py-3 font-medium text-gray-900">{{ category.name }}</td>
+                    <td class="px-5 py-3 text-gray-400 font-mono text-xs">{{ category.slug }}</td>
+                    <td class="px-5 py-3 text-right text-gray-500">{{ category.products|length }}</td>
+                    <td class="px-5 py-3 text-right">
+                        <div class="flex justify-end gap-2">
+                            <a href="{{ path('app_admin_category_edit', {id: category.id}) }}"
+                               class="text-indigo-600 hover:underline text-sm">Modifier</a>
+                            <form method="post" action="{{ path('app_admin_category_delete', {id: category.id}) }}"
+                                  onsubmit="return confirm('Supprimer cette catégorie ? Ses produits seront également supprimés.')">
+                                <input type="hidden" name="_token" value="{{ csrf_token('category_delete_' ~ category.id) }}">
+                                <button type="submit" class="text-red-500 hover:underline text-sm">Supprimer</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

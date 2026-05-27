@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="flex gap-8 items-start">
+
+    {# ─── SIDEBAR ─────────────────────────────────────────────────────────── #}
+    <aside class="w-48 shrink-0 sticky top-8">
+        <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3 px-2">Administration</p>
+        <nav class="space-y-1">
+            {% set currentRoute = app.request.attributes.get('_route') %}
+            {% set navLinks = [
+                {route: 'app_admin_dashboard',       label: '📊 Dashboard'},
+                {route: 'app_admin_product_index',   label: '📦 Produits'},
+                {route: 'app_admin_category_index',  label: '🏷️ Catégories'},
+                {route: 'app_admin_order_index',     label: '🧾 Commandes'},
+            ] %}
+            {% for link in navLinks %}
+            <a href="{{ path(link.route) }}"
+               class="flex items-center px-3 py-2 rounded-lg text-sm font-medium transition
+                      {% if currentRoute starts with link.route %}
+                          bg-indigo-50 text-indigo-700
+                      {% else %}
+                          text-gray-600 hover:bg-gray-100
+                      {% endif %}">
+                {{ link.label }}
+            </a>
+            {% endfor %}
+            <div class="border-t border-gray-200 pt-2 mt-2">
+                <a href="{{ path('app_home') }}" class="flex items-center px-3 py-2 rounded-lg text-sm text-gray-400 hover:bg-gray-100 transition">
+                    ← Retour au site
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    {# ─── CONTENU ─────────────────────────────────────────────────────────── #}
+    <div class="flex-1 min-w-0">
+        {% block admin_body %}{% endblock %}
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Dashboard Admin{% endblock %}
+
+{% block admin_body %}
+<div>
+    <h1 class="text-2xl font-bold text-gray-900 mb-8">Dashboard</h1>
+
+    {# ─── KPIs ──────────────────────────────────────────────────────────────── #}
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <p class="text-3xl font-extrabold text-indigo-600">{{ totalProducts }}</p>
+            <p class="text-sm text-gray-500 mt-1">Produits</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <p class="text-3xl font-extrabold text-indigo-600">{{ totalCategories }}</p>
+            <p class="text-sm text-gray-500 mt-1">Catégories</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <p class="text-3xl font-extrabold text-indigo-600">{{ totalOrders }}</p>
+            <p class="text-sm text-gray-500 mt-1">Commandes</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <p class="text-3xl font-extrabold text-green-600">{{ totalRevenue|number_format(2, ',', ' ') }} €</p>
+            <p class="text-sm text-gray-500 mt-1">Chiffre d'affaires</p>
+        </div>
+    </div>
+
+    {# ─── DERNIÈRES COMMANDES ────────────────────────────────────────────────── #}
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            <h2 class="font-bold text-gray-900">Dernières commandes</h2>
+            <a href="{{ path('app_admin_order_index') }}" class="text-sm text-indigo-600 hover:underline">Voir tout →</a>
+        </div>
+        {% if latestOrders is empty %}
+            <p class="px-6 py-8 text-gray-400 text-sm text-center">Aucune commande pour l'instant.</p>
+        {% else %}
+            <table class="w-full text-sm">
+                <thead class="bg-gray-50 text-gray-500">
+                    <tr>
+                        <th class="text-left px-6 py-3 font-medium">#</th>
+                        <th class="text-left px-6 py-3 font-medium">Client</th>
+                        <th class="text-left px-6 py-3 font-medium">Date</th>
+                        <th class="text-right px-6 py-3 font-medium">Total</th>
+                        <th class="text-right px-6 py-3 font-medium">Statut</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-50">
+                    {% for order in latestOrders %}
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-6 py-3 font-medium text-gray-700">#{{ order.id }}</td>
+                        <td class="px-6 py-3 text-gray-600">{{ order.user.email }}</td>
+                        <td class="px-6 py-3 text-gray-400">{{ order.createdAt|date('d/m/Y H:i') }}</td>
+                        <td class="px-6 py-3 text-right font-semibold">{{ order.total|number_format(2, ',', ' ') }} €</td>
+                        <td class="px-6 py-3 text-right">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ order.status.badgeClass() }}">
+                                {{ order.status.label() }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
