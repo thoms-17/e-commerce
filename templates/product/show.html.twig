@@ -43,9 +43,19 @@
                     </div>
 
                     {% if product.stock > 0 %}
-                        <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition text-lg">
-                            Ajouter au panier
-                        </button>
+                        {% if app.user %}
+                            <form method="post" action="{{ path('app_cart_add', {id: product.id}) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('cart_add') }}">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition text-lg">
+                                    Ajouter au panier
+                                </button>
+                            </form>
+                        {% else %}
+                            <a href="{{ path('app_login') }}" class="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition text-lg text-center">
+                                Connectez-vous pour acheter
+                            </a>
+                        {% endif %}
                     {% else %}
                         <button disabled class="w-full bg-gray-200 text-gray-400 font-semibold py-3 rounded-xl cursor-not-allowed text-lg">
                             Indisponible

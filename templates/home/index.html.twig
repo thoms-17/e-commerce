@@ -1,29 +1,110 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil — Symfony Shop{% endblock %}
+{% block title %}Symfony Shop — Qualité & Rapidité{% endblock %}
 
 {% block body %}
-    <div class="text-center py-20">
-        <h1 class="text-4xl font-bold text-indigo-600 mb-4">Symfony Shop</h1>
-        <p class="text-lg text-gray-600 mb-2">L'environnement fonctionne correctement.</p>
-        <p class="text-sm text-gray-400">PHP {{ phpVersion }} &bull; PostgreSQL 16 &bull; FrankenPHP</p>
 
-        <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto text-left">
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <div class="text-2xl mb-2">✅</div>
-                <div class="font-semibold text-gray-800">Symfony 7</div>
-                <div class="text-sm text-gray-500 mt-1">Framework PHP installé et opérationnel</div>
-            </div>
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <div class="text-2xl mb-2">✅</div>
-                <div class="font-semibold text-gray-800">FrankenPHP</div>
-                <div class="text-sm text-gray-500 mt-1">Serveur web + PHP en un seul conteneur Docker</div>
-            </div>
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <div class="text-2xl mb-2">✅</div>
-                <div class="font-semibold text-gray-800">PostgreSQL</div>
-                <div class="text-sm text-gray-500 mt-1">Base de données connectée via Doctrine</div>
-            </div>
+{# ─── HERO ─────────────────────────────────────────────────────────────────── #}
+<div class="-mx-4 -mt-8 px-4 py-24 bg-gradient-to-br from-indigo-900 via-indigo-800 to-violet-900 text-white text-center">
+    <p class="text-sm font-semibold tracking-widest uppercase text-indigo-300 mb-3">Nouveautés 2026</p>
+    <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight mb-5">
+        Tout ce dont vous avez besoin,<br class="hidden sm:block"> livré chez vous.
+    </h1>
+    <p class="text-indigo-200 text-lg max-w-xl mx-auto mb-8">
+        Électronique, mode, maison, sport — des centaines de produits sélectionnés pour vous.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="{{ path('app_product_index') }}"
+           class="bg-white text-indigo-700 font-bold px-8 py-3 rounded-xl hover:bg-indigo-50 transition shadow-lg">
+            Découvrir le catalogue
+        </a>
+        {% if not app.user %}
+        <a href="{{ path('app_register') }}"
+           class="border border-white/40 text-white font-semibold px-8 py-3 rounded-xl hover:bg-white/10 transition">
+            Créer un compte
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+{# ─── RÉASSURANCE ──────────────────────────────────────────────────────────── #}
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10 mb-12">
+    <div class="flex items-center gap-3 bg-white rounded-xl border border-gray-100 shadow-sm px-5 py-4">
+        <span class="text-2xl shrink-0">🚚</span>
+        <div>
+            <p class="font-semibold text-gray-800 text-sm">Livraison gratuite</p>
+            <p class="text-xs text-gray-400">Dès 50 € d'achat</p>
         </div>
     </div>
+    <div class="flex items-center gap-3 bg-white rounded-xl border border-gray-100 shadow-sm px-5 py-4">
+        <span class="text-2xl shrink-0">🔒</span>
+        <div>
+            <p class="font-semibold text-gray-800 text-sm">Paiement sécurisé</p>
+            <p class="text-xs text-gray-400">Cryptage SSL 256 bits</p>
+        </div>
+    </div>
+    <div class="flex items-center gap-3 bg-white rounded-xl border border-gray-100 shadow-sm px-5 py-4">
+        <span class="text-2xl shrink-0">↩️</span>
+        <div>
+            <p class="font-semibold text-gray-800 text-sm">Retours sous 30 jours</p>
+            <p class="text-xs text-gray-400">Satisfait ou remboursé</p>
+        </div>
+    </div>
+</div>
+
+{# ─── CATÉGORIES ───────────────────────────────────────────────────────────── #}
+{% set categoryIcons = {
+    'electronique':  '💻',
+    'vetements':     '👕',
+    'maison-jardin': '🏡',
+    'sport':         '🏃'
+} %}
+
+<section class="mb-14">
+    <h2 class="text-xl font-bold text-gray-900 mb-5">Nos catégories</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {% for category in categories %}
+        <a href="{{ path('app_product_by_category', {slug: category.slug}) }}"
+           class="group bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col items-center gap-3 hover:border-indigo-300 hover:shadow-md transition text-center">
+            <span class="text-4xl">{{ categoryIcons[category.slug] ?? '🛍️' }}</span>
+            <span class="font-semibold text-gray-800 group-hover:text-indigo-600 transition text-sm">{{ category.name }}</span>
+        </a>
+
+        {% endfor %}
+    </div>
+</section>
+
+{# ─── PRODUITS MIS EN AVANT ────────────────────────────────────────────────── #}
+<section class="mb-10">
+    <div class="flex items-center justify-between mb-5">
+        <h2 class="text-xl font-bold text-gray-900">Sélection du moment</h2>
+        <a href="{{ path('app_product_index') }}" class="text-sm text-indigo-600 hover:underline">Voir tout →</a>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        {% for product in featuredProducts %}
+        <a href="{{ path('app_product_show', {slug: product.slug}) }}"
+           class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-200 transition flex flex-col overflow-hidden">
+            <div class="bg-gradient-to-br from-indigo-50 to-gray-100 h-36 flex items-center justify-center">
+                <span class="text-4xl">{{ categoryIcons[product.category.slug] ?? '🛍️' }}</span>
+            </div>
+            <div class="p-4 flex flex-col flex-1">
+                <p class="text-xs text-gray-400 mb-1">{{ product.category.name }}</p>
+                <p class="font-semibold text-gray-900 text-sm leading-snug group-hover:text-indigo-600 transition line-clamp-2 flex-1">
+                    {{ product.name }}
+                </p>
+                <div class="flex items-center justify-between mt-3">
+                    <span class="font-bold text-indigo-700">{{ product.price|number_format(2, ',', ' ') }} €</span>
+                    {% if product.stock == 0 %}
+                        <span class="text-xs text-red-400 font-medium">Indisponible</span>
+                    {% else %}
+                        <span class="text-xs text-green-600 font-medium">En stock</span>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
 {% endblock %}
